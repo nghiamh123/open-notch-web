@@ -76,8 +76,9 @@ jobs:
         if: steps.gate.outputs.ready == 'true'
         # Key trên VPS bị giới hạn bằng rrsync: chỉ ghi được trong /var/www/opennotch.nghiadang.site,
         # nên đích "/" ở đây chính là thư mục web đó.
+        # -c so rsync compares content: git checkout resets mtimes, which would otherwise re-upload everything.
         run: |
-          rsync -az --delete --chmod=D755,F644 \
+          rsync -rlcz --delete \
             --exclude='.git/' --exclude='.github/' --exclude='.gitignore' \
             --exclude='README.md' --exclude='.DS_Store' \
             -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts" \
