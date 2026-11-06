@@ -1,0 +1,97 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Chỉ một lần deploy chạy tại một thời điểm; lần mới chờ lần cũ xong.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  SITE_URL: https://opennotch.nghiadang.site
+  DEPLOY_HOST: 103.200.20.41
+  DEPLOY_USER: nghia
+  # Host key của VPS (public, đã đối chiếu với /etc/ssh/ssh_host_ed25519_key.pub trên server).
+  DEPLOY_KNOWN_HOST: "103.200.20.41 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOuaM/SU7DIVn8si//c7eCKHCZ6+E1Na+0aNI4PpZUE/"
+
+jobs:
+  check:
+    name: Kiểm tra
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cú pháp JavaScript
+        run: node --check script.js
+
+      - name: Đường dẫn trong index.html trỏ tới file có thật
+        run: node .github/scripts/check-links.mjs
+
+  deploy:
+    name: Deploy lên VPS
+    needs: check
+    # Chỉ deploy khi push (hoặc chạy tay) trên main; pull request không bao giờ chạm tới secret.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Kiểm tra secret DEPLOY_SSH_KEY
+        id: gate
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          if [ -z "$DEPLOY_SSH_KEY" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Chưa deploy::Repo chưa có secret DEPLOY_SSH_KEY nên bước deploy được bỏ qua. Xem README, mục 'Cài đặt CI/CD một lần'."
+            echo "### ⚠️ Chưa deploy" >> "$GITHUB_STEP_SUMMARY"
+            echo "Repo chưa có secret \`DEPLOY_SSH_KEY\`. Xem README → *Cài đặt CI/CD một lần*." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Chuẩn bị SSH
+        if: steps.gate.outputs.ready == 'true'
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOST" > ~/.ssh/known_hosts
+
+      - name: Rsync lên VPS
+        if: steps.gate.outputs.ready == 'true'
+        # Key trên VPS bị giới hạn bằng rrsync: chỉ ghi được trong /var/www/opennotch.nghiadang.site,
+        # nên đích "/" ở đây chính là thư mục web đó.
+        run: |
+          rsync -az --delete --chmod=D755,F644 \
+            --exclude='.git/' --exclude='.github/' --exclude='.gitignore' \
+            --exclude='README.md' --exclude='.DS_Store' \
+            -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts" \
+            ./ "$DEPLOY_USER@$DEPLOY_HOST:/"
+
+      - name: Kiểm tra site sau khi deploy
+        if: steps.gate.outputs.ready == 'true'
+        run: |
+          set -e
+          curl -fsS --retry 3 --retry-delay 3 "$SITE_URL/" | grep -q "OpenNotch"
+          for p in style.css script.js assets/promo.mp4 assets/og-image.png assets/donate-qr.png assets/OpenNotch-0.1.0.dmg; do
+            code=$(curl -s -o /dev/null -I -w '%{http_code}' "$SITE_URL/$p")
+            echo "$code  $p"
+            [ "$code" = "200" ]
+          done
+          echo "### ✅ Đã deploy" >> "$GITHUB_STEP_SUMMARY"
+          echo "$SITE_URL — commit \`${GITHUB_SHA::7}\`" >> "$GITHUB_STEP_SUMMARY"

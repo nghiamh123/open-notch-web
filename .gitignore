@@ -1,0 +1,6 @@
+.DS_Store
+*.log
+node_modules/
+
+# Video dọc 9:16 hiện chưa dùng trên trang
+assets/promo-9x16.mp4

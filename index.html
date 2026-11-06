@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenNotch — Biến tai thỏ MacBook thành Dynamic Island</title>
+  <meta name="description" content="OpenNotch biến tai thỏ MacBook thành một hòn đảo thông minh: nhạc đang phát, file cất tạm, lịch âm, nhắc giờ ngủ, thông số máy — chỉ cách một cú rê chuột.">
+  <meta name="theme-color" content="#050507">
+  <meta property="og:title" content="OpenNotch — Tai thỏ của bạn, sống dậy">
+  <meta property="og:description" content="Dynamic Island cho tai thỏ MacBook, viết bằng Swift/SwiftUI.">
+  <link rel="canonical" href="https://opennotch.nghiadang.site/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://opennotch.nghiadang.site/">
+  <meta property="og:image" content="https://opennotch.nghiadang.site/assets/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1087">
+  <meta property="og:image:height" content="564">
+  <meta property="og:image:alt" content="OpenNotch — Tai thỏ của bạn, sống dậy.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://opennotch.nghiadang.site/assets/og-image.png">
+  <link rel="icon" type="image/png" href="assets/icon-256.png">
+  <link rel="apple-touch-icon" href="assets/icon-256.png">
+  <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip" href="#main">Bỏ qua điều hướng</a>
+
+  <header class="nav" id="top">
+    <div class="wrap nav-in">
+      <a class="brand" href="#top" aria-label="OpenNotch — về đầu trang">
+        <img src="assets/icon-256.png" width="32" height="32" alt="">
+        <span>OpenNotch</span>
+      </a>
+      <nav class="links" aria-label="Điều hướng chính">
+        <a href="#tinh-nang">Tính năng</a>
+        <a href="#cai-dat">Cài đặt</a>
+        <a href="#ung-ho">Ủng hộ</a>
+      </nav>
+      <a class="btn btn-sm" href="#cai-dat">Tải về</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="badge"><span class="dot"></span> v0.1.0 · macOS 14+ · Apple Silicon &amp; Intel</p>
+        <h1>Tai thỏ của bạn,<br><span class="grad">sống dậy.</span></h1>
+        <p class="lead">Vùng đen chỉ để giấu camera giờ trở thành một hòn đảo thông minh: nhạc đang phát, file cất tạm, lịch âm, giờ ngủ, thông số máy — chỉ cách một cú rê chuột.</p>
+        <div class="cta">
+          <a class="btn" href="assets/OpenNotch-0.1.0.dmg" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 19.5h16"/></svg>
+            Tải OpenNotch cho macOS
+          </a>
+        </div>
+        <!-- Video giới thiệu (Remotion) -->
+        <figure class="video hero-video">
+          <video id="promo" controls muted loop playsinline preload="auto" poster="assets/poster.jpg" aria-label="Video giới thiệu OpenNotch, dài 30 giây">
+            <source src="assets/promo.mp4" type="video/mp4">
+            Trình duyệt của bạn không phát được video này. <a href="assets/promo.mp4">Tải video</a>.
+          </video>
+        </figure>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="sec" id="tinh-nang">
+      <div class="wrap">
+        <div class="head reveal">
+          <p class="eyebrow">Tính năng</p>
+          <h2>Tám module, <span class="grad">một cú rê chuột</span></h2>
+          <p class="sub">Chọn tối đa 4 module hiện trên thanh tab và sắp xếp thứ tự trong Cài đặt. Cần gì, notch tự mở đúng module đó.</p>
+        </div>
+
+        <div class="grid">
+          <article class="card reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>
+            <h3>Home · Nhạc &amp; lịch</h3>
+            <p>Điều khiển Spotify, YouTube Music, SoundCloud trong Chrome, Brave, Edge, Arc, Safari. Kèm lịch hôm nay và lịch âm Việt Nam: Can Chi, mùng 1, rằm.</p>
+          </article>
+          <article class="card reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13.5 6 5h12l3 8.5V19H3z"/><path d="M3 13.5h5l1.5 2.5h5l1.5-2.5h5"/></svg>
+            <h3>Tray · Khay file</h3>
+            <p>Kéo file vào notch để cất tạm, kéo ra khi cần. Thả vào ô AirDrop để gửi ngay, hoặc đổi đuôi ảnh .png / .jpg / .jpeg / .webp.</p>
+          </article>
+          <article class="card reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+            <h3>Ngủ · Nhắc đi ngủ</h3>
+            <p>Đặt giờ ngủ/dậy, đếm ngược, gợi ý theo chu kỳ 90 phút. Notch tự mở và báo âm thanh trước giờ ngủ, có nút “Báo lại 10 phút”.</p>
+          </article>
+          <article class="card reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+            <h3>System · Thông số máy</h3>
+            <p>Pin, CPU, RAM, ổ đĩa và biểu đồ CPU theo thời gian thực, ngay trên tai thỏ.</p>
+          </article>
+          <article class="card reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2h5"/></svg>
+            <h3>Focus Timer</h3>
+            <p>Pomodoro, hẹn giờ, bấm giờ ghi vòng. Khi notch đóng vẫn thấy vòng tiến độ và đếm ngược; hết giờ notch tự mở.</p>
+          </article>
+          <article class="card reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="m16 10.5 5-3v9l-5-3"/></svg>
+            <h3>Họp sắp tới</h3>
+            <p>Nút “Vào họp” cho Zoom, Google Meet, Teams, Webex. Hiện trước 5–30 phút, mở notch kèm âm báo 1 phút trước giờ họp.</p>
+          </article>
+          <article class="card reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h5"/></svg>
+            <h3>Ghi chú nhanh</h3>
+            <p>Ba trang ghi chú nháp, tự lưu. Đang gõ thì rời chuột không đóng notch, click ra ngoài mới đóng.</p>
+          </article>
+          <article class="card reveal">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16.5 9.5"/></svg>
+            <h3>Reminders</h3>
+            <p>Xem việc chưa xong từ app Reminders, quá hạn tô đỏ, tick để hoàn thành, gõ để thêm việc mới.</p>
+          </article>
+        </div>
+
+        <div class="priority reveal">
+          <h3>Khi notch đóng, nó vẫn nói với bạn điều quan trọng nhất</h3>
+          <ol class="chips" aria-label="Thứ tự ưu tiên live activity">
+            <li>Sắp họp</li>
+            <li>Timer đang chạy</li>
+            <li>Giờ ngủ</li>
+            <li>Nhạc</li>
+          </ol>
+          <p>Live activity tự chọn theo thứ tự ưu tiên này: ảnh bìa, sóng nhạc, đếm ngược hiện ngay trên tai thỏ.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTALL -->
+    <section class="sec" id="cai-dat">
+      <div class="wrap">
+        <div class="head reveal">
+          <p class="eyebrow">Cài đặt</p>
+          <h2>Ba bước, <span class="grad">chưa tới một phút</span></h2>
+        </div>
+
+        <ol class="steps">
+          <li class="step reveal">
+            <span class="n">1</span>
+            <div>
+              <h3>Tải và kéo vào Applications</h3>
+              <p>Mở file .dmg rồi kéo OpenNotch vào thư mục Applications.</p>
+              <a class="btn" href="assets/OpenNotch-0.1.0.dmg" download>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 19.5h16"/></svg>
+                Tải file .dmg · 2,5 MB
+              </a>
+            </div>
+          </li>
+          <li class="step reveal">
+            <span class="n">2</span>
+            <div>
+              <h3>Mở lần đầu</h3>
+              <p>App chưa có chứng chỉ Developer ID nên macOS sẽ chặn lần đầu. Vào <em>System Settings › Privacy &amp; Security › Open Anyway</em>, hoặc chạy lệnh sau trong Terminal:</p>
+              <div class="code">
+                <code id="cmd">xattr -dr com.apple.quarantine /Applications/OpenNotch.app</code>
+                <button type="button" class="copy" id="copy" data-label="Sao chép">Sao chép</button>
+              </div>
+            </div>
+          </li>
+          <li class="step reveal">
+            <span class="n">3</span>
+            <div>
+              <h3>Rê chuột lên tai thỏ</h3>
+              <p>App chạy trên menu bar, không có icon Dock. Lần đầu điều khiển nhạc, đọc lịch hay Reminders, macOS sẽ hỏi quyền Automation / Calendar / Reminders.</p>
+              <p class="note">Nhạc trong trình duyệt: bật <em>Allow JavaScript from Apple Events</em> (Chrome, Brave, Edge, Arc ở menu View › Developer; Safari ở menu Develop).</p>
+            </div>
+          </li>
+        </ol>
+
+        <dl class="specs reveal">
+          <div><dt>Phiên bản</dt><dd>0.1.0</dd></div>
+          <div><dt>Yêu cầu</dt><dd>macOS 14 trở lên</dd></div>
+          <div><dt>Kiến trúc</dt><dd>Universal (arm64 + x86_64)</dd></div>
+          <div class="wide"><dt>SHA-256</dt><dd><code>87bf3bd6abbb64bedb18bf5ffd2ee2831af3fc845554cc99a02c29d001cca265</code></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- DONATE -->
+    <section class="sec" id="ung-ho">
+      <div class="wrap">
+        <div class="head reveal">
+          <p class="eyebrow">Ủng hộ</p>
+          <h2>Thấy OpenNotch hữu ích? <span class="grad">Mời mình ly cà phê</span></h2>
+          <p class="sub">Một khoản ủng hộ nhỏ giúp dự án tiếp tục được cập nhật. Hoàn toàn không bắt buộc, cảm ơn bạn đã dùng thử.</p>
+        </div>
+
+        <div class="donate reveal">
+          <div class="qr">
+            <img src="assets/donate-qr.png" width="578" height="648" loading="lazy"
+                 alt="Mã QR chuyển khoản VietQR tới tài khoản Techcombank của tác giả">
+          </div>
+          <div class="dinfo">
+            <h3>Quét mã bằng app ngân hàng</h3>
+            <p>Mở app ngân hàng hoặc ví bất kỳ hỗ trợ VietQR / Napas 247, chọn quét QR rồi nhập số tiền bạn muốn.</p>
+            <dl class="bank">
+              <div><dt>Ngân hàng</dt><dd>Techcombank</dd></div>
+              <div><dt>Chủ tài khoản</dt><dd>DANG HOANG DAI NGHIA</dd></div>
+              <div>
+                <dt>Số tài khoản</dt>
+                <dd class="acc">
+                  <span>8411 8866 88</span>
+                  <button type="button" class="copy" data-copy="8411886688" data-label="Sao chép">Sao chép</button>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-in">
+      <a class="brand" href="#top"><img src="assets/icon-256.png" width="28" height="28" alt=""><span>OpenNotch</span></a>
+      <p>Viết từ đầu bằng Swift &amp; SwiftUI. Dựa trên phân tích cấu trúc NotchBox, không dùng lại code hay tài nguyên của NotchBox.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
